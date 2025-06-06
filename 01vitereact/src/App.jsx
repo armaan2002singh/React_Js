@@ -15,3 +15,6 @@ const hey = "hey! - Armaan"
 
 export default App
 // if i want to return the component like Text with other HTML tags then, can use - <>code</> (called fragement.)
+
+
+// react fiber concept from github repo.--https://github.com/acdlite/react-fiber-architecture/tree/master
