@@ -12,7 +12,7 @@ function App() {
     */
 
 
-let [counter, setCounter]= useState(0)// can give any prop in useState.
+const [counter, setCounter]= useState(0)// can give any prop in useState.
 //let counter = 15
 
     
@@ -21,6 +21,19 @@ let [counter, setCounter]= useState(0)// can give any prop in useState.
           //counter = counter + 1  
           //console.log('value added', counter);
           setCounter(counter + 1)
+          // case study - if i will copy the code setCounter then will it change the increment result. like if i will write the setCounter x 5 then will be result equal to +5?
+
+          //[NOTE--> well this whole concept is not related to the set counter, it is with USESTATE... --> will send the multiple setCounter in batch because of react-fiber.]
+
+          // in any case i want to use that approcah then, will use the preCounter (its previous state) or use the call back function present in the setCounter((preCounter)=>{})
+            // if we can name it according to our own understanding but if we will use mutliple name then it will create code inconsistancy. So try to name it only one name
+            // setCounter(preCounter => preCounter +1)
+            // setCounter(preCounter => preCounter +1)
+            // setCounter(preCounter => preCounter +1)
+            // setCounter(preCounter => preCounter +1) 
+
+            // here we are using the previous updated variable.
+            
         }else{
           alert('value is already 20')
         }
