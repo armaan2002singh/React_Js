@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 
 function App() {
 const [lenght, setLenght] = useState(0)
@@ -32,6 +32,14 @@ const passwordGenerator= useCallback(()=>{
     passwordGenerator()
   },[lenght, numberAllowed, charatersAllowed, passwordGenerator])
 
+// HOOK- if want to cpoy the targeted value also to provide the indication to user - useRef(), Also called reference HOOK>
+
+    const copypasswordToClipBoard = useCallback(()=>{ 
+      passwordRef.current?.select() // to highlight the selected value 
+      passwordRef.current?.setSelectionRange(0,20) // will set the selection range of the value.
+      window.navigator.clipboard.writeText(password) // if i am working in core react so can use window, if will use NEXT.js then no window because of server side rendering.
+    },[password])
+  const passwordRef = useRef(null);
   return (
     <>
     
@@ -41,8 +49,12 @@ const passwordGenerator= useCallback(()=>{
         <input type="text"
         value={password}
         className="outline-none w-full py-1 px-3" 
-        placeholder="password"/>
-        <button className='outline-none bg-blue-500 text-white p-2 px-4'>copy</button>
+        placeholder="password"
+        ref={passwordRef}/>
+        {/* here is the use of useRef() */}
+        <button className='outline-none bg-blue-500 text-white p-2 px-4'
+        onClick={copypasswordToClipBoard}
+        >copy</button>
       </div>
       <div className='flex text-sm text-orange gap-x-2'>
         <div className='flex items-center gap-x-1'>
