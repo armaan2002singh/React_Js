@@ -20,10 +20,13 @@ function App() {
     setConvertedAmount(amount)
     setAmount(convertedAmount)
   }
-  
   const convert = () => {
-    setConvertedAmount(amount * currencyInfo[to])
+  if (amount && currencyInfo[to]) {
+    setConvertedAmount(amount * currencyInfo[to]);
+  } else {
+    setConvertedAmount(0);
   }
+}
 
   return (
     <div
@@ -46,7 +49,7 @@ function App() {
                             label="From"
                             amount={amount}
                             currencyOptions={options}
-                            onCurrencyChange={(currency) => setAmount(amount)}
+                            onCurrencyChange={(currency) => setAmount(currency)}
                             selectCurrency={from}
                             onAmountChange={(amount) => setAmount(amount)}
                         />
@@ -66,7 +69,7 @@ function App() {
                             amount={convertedAmount}
                             currencyOptions={options}
                             onCurrencyChange={(currency) => setTo(currency)}
-                            selectCurrency={from}
+                            selectCurrency={to}
                             amountDisable
                         />
                     </div>
