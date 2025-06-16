@@ -8,7 +8,7 @@ export class Service {
   constructor() {
     this.client
       .setEndpoint(conf.appwriteUrl)
-      .setProject(conf.appwriteProjectId);
+      .setProject(conf.appwriteProjectId); 
 
     this.databases = new Databases(this.client);
     this.bucket = new Storage(this.client);
@@ -31,6 +31,25 @@ export class Service {
       // which value will be passed in it.
     } catch (error) {
       console.log("appwrite servie :: create Post", error);
+    }
+  }
+
+  //update document->
+  async updatePost(slug, {title, content, featuredImage, status}){
+    try {
+      return await this.databases.updateDocument(
+        conf.appwriteDatabaseId,
+        conf.appwriteCollectionId,
+        slug,{
+          title,
+          content,
+          featuredImage,
+          status
+        }
+      )
+    } catch (error) {
+      console.log("Error in update post of config.js :: ", error);
+      
     }
   }
 }
