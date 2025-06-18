@@ -52,6 +52,55 @@ export class Service {
       
     }
   }
+
+
+  //delete post.
+  async deletePost(slug){
+    try {
+      await this.databases.deleteDocument(
+        conf.appwriteDatabaseId,
+        conf.appwriteCollectionId,
+        slug
+      )
+      return true
+
+    } catch (error) {
+      console.log("appwrite service :: delete post ::" ,error);
+
+      return false
+    }
+  }
+
+  //get document
+  async getPost(slug){
+    try {
+      await this.databases.getDocument(
+        conf.appwriteDatabaseId,
+        conf.appwriteCollectionId,
+        slug
+      )
+    } catch (error) {
+      console.log("error in getpost ::", error);
+      
+    }
+  }
+
+  // all documents -- will use queries to filter the doc's.
+  async getPosts(queries = [Query.equal("status", "active")]){
+    try {
+      return await this.databases.listDocuments(
+        conf.appwriteDatabaseId,
+        conf.appwriteCollectionId,
+        queries,
+        //100, // pagination etc... NOTE -- need to study it in advance.
+      )
+    } catch (error) {
+      console.log("error in the getPosts ::", error);
+      return false
+      
+    }
+  }
+
 }
 const service = new Service();
 export default service;
