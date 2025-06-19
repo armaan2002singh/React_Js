@@ -101,6 +101,44 @@ export class Service {
     }
   }
 
+  //file upload services
+
+  async uploadFile(file){//here avoid the mistake of giving the name of the file, because here will give the blob of the file.
+    try {
+      return await this.bucket.createFile(
+        conf.appwriteBucketId,
+        ID.unique(),
+        file
+      )
+      
+    } catch (error) {
+      console.log("appwrite service error ::in fileUpload :: ", error);
+      
+    }
+  }
+
+  //delete file
+  async deleteFile(fileId){
+    try {
+       await this.bucket.deleteFile(
+        conf.appwriteBucketId,
+        fileId
+      )
+      return true
+    } catch (error) {
+      console.log("error in appwrite services :: delete file :: ", error);
+      return false
+    }
+  }
+
+  //file preview -- in this their is no promise of this so we will not use async await and it is genuinelly fast
+  getFilePreview(fileId) {
+    return this.bucket.getFilePreview(
+      conf.appwriteBucketId,
+      fileId
+    )
+  }
+
 }
 const service = new Service();
 export default service;
