@@ -1,5 +1,3 @@
-import React from 'react'
-
 function Button({
     children,
     type = 'button',
@@ -17,3 +15,5 @@ function Button({
 }
 
 export default Button
+
+// concept of the forward reference --> where if i am making a form where the different components of input and buttons are used and the useState of those components are accessed in the other component is called forward reference. 
