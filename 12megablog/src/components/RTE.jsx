@@ -12,20 +12,19 @@ export default function RTE({
 }) {
   return (
     <div className='w-full'> 
-    {label &&  <label className='inline-block mb-1 pl-2'>{}</label>} 
+    {label &&  <label className='inline-block mb-1 pl-2'>{label}</label>} 
     <Controller
     name={name || "content"}
     control={control} // to provide the control to the parent to provide the access of the all attributes and values.
     render={({field:{onChange}})=>(
 
         //the element we want to change.
-         <Editor
-            initialValue= {defaultValue}
-            init={
-                {
-                    brading:false,
-                    height:500,
-                    menubar:true,
+        <Editor
+                initialValue={defaultValue}
+                init={{
+                    initialValue: defaultValue,
+                    height: 500,
+                    menubar: true,
                     plugins: [
                         "image",
                         "advlist",
@@ -51,12 +50,11 @@ export default function RTE({
                     toolbar:
                     "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |removeformat | help",
                     content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }"
-                    
-                }
-            }
-            onEditorChange={onChange}
-        // init - what value we want can fill in this init={{here}}
+                }}
+                onEditorChange={onChange}
         />
+        // init - what value we want can fill in this init={{here}}
+        
 
 
     )}

@@ -24,7 +24,7 @@ function Footer() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to="/about" className="hover:underline">
+                                    <Link to="/" className="hover:underline">
                                         About
                                     </Link>
                                 </li>

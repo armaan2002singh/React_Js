@@ -27,9 +27,9 @@ export default function Protected({
         //  let authValue = authStatus === true ? true : false
 
         //TODO make it more easy and understandable.
-        if(authentication && authStatus != authentication){
+        if(authentication && authStatus !== authentication){
             navigate("/login")
-        }else if(!authentication && authStatus != authentication){
+        }else if(!authentication && authStatus !== authentication){
             navigate("/")
         }
 

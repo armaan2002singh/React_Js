@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form'
 
 function Signup() {
     const navigate = useNavigate()
-    const [error, setError] = useState()
+    const [error, setError] = useState("")
     const dispatch = useDispatch()
     const {register, handleSubmit} = useForm()
 
@@ -43,14 +43,14 @@ function Signup() {
             {error && <p className='text-red-600 mt-8 text-center'>{error}</p>}
             <form onSubmit={handleSubmit(create)}>
                 <div className='space-y-5'>
-                    <input 
+                    <Input 
                     label="Full Name : "
                     placeholder='Enter your full name'
                     {...register("name",{
-                        required:true
+                        required:true,
                     })}
                     />
-                    <input type="email" 
+                    <Input type="email" 
                     label="Email : "
                     placeholder='Enter your email'
                     {...register("email",{
@@ -61,11 +61,11 @@ function Signup() {
                         }
                     })}
                     />
-                    <input type="password"
+                    <Input type="password"
                     placeholder='Enter your password'
                     label="Password"
                     {...register("password",{
-                        required: true
+                        required: true,
                     })} />
                     <Button 
                     type="submit" className="w-full">Create Account</Button>

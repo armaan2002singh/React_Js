@@ -1,9 +1,7 @@
-import React, { Children } from 'react'
+import React from 'react'
 
-function Container({Children}) {
-  return <div className='w-full max-w-7xl mx-auto px-4'>
-      {Children}
-    </div>;
+function Container({children}) { // the value - children starts from small letter.
+  return <div className='w-full max-w-7xl mx-auto px-4'>{children}</div>;
   
 }
 

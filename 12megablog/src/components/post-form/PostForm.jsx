@@ -5,25 +5,25 @@ import appwriteService from '../../appwrite/config'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-function PostForm({post}) { //these all values will come from post the button will be clicked.
+export default function PostForm({post}) { //these all values will come from post the button will be clicked.
     const {register, handleSubmit, watch, setValue, control, getValues} = useForm(
         {//we wil add values, those will be required.
-            defaultValues:{
-                title:post?.title || '',
-                slug: post?.slug || '',
-                content: content?.content || '',
-                status:post?.status || 'active',
-            }
+                defaultValues: {
+                title: post?.title || "",
+                slug: post?.$id || "",
+                content: post?.content || "",
+                status: post?.status || "active",
+            },
         }
-    )
+    );
     // here the control present in it will passed to the RTE.
     const navigate = useNavigate()
-    const userData = useSelector(state => state.user.userData)
+    const userData = useSelector((state) => state.auth.userData)
 
     //submit...
     const submit = async (data)=>{
         if(post){
-            const file = data.image[0] ? appwriteService.uploadFile(data.image[0]): null
+            const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]): null;
             //now next is for delete previous file.
             if(file){
                 appwriteService.deleteFile(post.featuredImage)
@@ -36,7 +36,7 @@ function PostForm({post}) { //these all values will come from post the button wi
                     navigate(`/post/${dbPost.$id}`)
             }
         }else{
-               const file = data.image[0] ? appwriteService.uploadFile(data.image[0]) : null
+               const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
 
                if(file){
                 const fileId = file.$id
@@ -58,13 +58,14 @@ function PostForm({post}) { //these all values will come from post the button wi
     //slug transform
     const slugTransform = useCallback((value)=>{
         if(value && typeof value ==='string')
-            return value.trim()
+            return value
+            .trim()
             .toLowerCase()
             .replace(/^[a-zA-Z\d\s]+/g,'-')// here in the replace we can match any kind of pattern.
             .replace(/\s/g,'-')
         
             return'';
-    },[/*for dependencies*/])
+    },[])
 // NOTE --> here the interview question is how to use this method?
 // -->
     
@@ -73,14 +74,13 @@ function PostForm({post}) { //these all values will come from post the button wi
 
         const subscription = watch((value, {name})=>{
             if(name === 'title'){
-                setValue('slug', slugTransform(value.title,
+                setValue('slug', slugTransform(value.title),
                     {shouldValidate:true}
-                ))
+                );
             }
-        })
-        return ()=>{
-            subscription.unsubscribe() // here it is the concept of memory management. Also to avoid the loop of running again and again.
-        }
+        });
+        return ()=> subscription.unsubscribe(); // here it is the concept of memory management. Also to avoid the loop of running again and again.
+        
     },[watch, slugTransform, setValue]) // here we have declared the some of the dependencies in this React.useEffect()
 
   return (
@@ -104,6 +104,7 @@ function PostForm({post}) { //these all values will come from post the button wi
                 />
                 <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
             </div>
+
             <div className="w-1/3 px-2">
                 <Input
                     label="Featured Image :"
@@ -134,5 +135,3 @@ function PostForm({post}) { //these all values will come from post the button wi
         </form>
   )
 }
-
-export default PostForm
