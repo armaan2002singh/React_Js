@@ -4,7 +4,7 @@ import appwriteServive from '../appwrite/config'
 import { useNavigate, useParams } from 'react-router-dom'
 
 function EditPost() {
-    const [posts, setPosts] = useState(null)
+    const [post, setPosts] = useState(null)
     const {slug}= useParams() //Edit in the concept of edit slug will be useed.
     const navigate = useNavigate()
 
@@ -21,11 +21,14 @@ function EditPost() {
         }
     },[slug, navigate])
 
-  return (
-    <div>
-      
+  return  post ? (
+    <div className='py-8'>
+        <Container>
+            <PostForm post={post}/>
+        </Container>
     </div>
-  )
+  ) : null
+  
 }
 
 export default EditPost
