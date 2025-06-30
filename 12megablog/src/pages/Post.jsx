@@ -12,7 +12,7 @@ export default function Post() {
 
     const userData = useSelector((state) => state.auth.userData);
 
-    const isAuthor = post && userData ? post.userId === userData.$id : false;
+    const isAuthor = post && userData ? post.userid === userData.$id : false;
 
     useEffect(() => {
         if (slug) {
@@ -26,7 +26,7 @@ export default function Post() {
     const deletePost = () => {
         appwriteService.deletePost(post.$id).then((status) => {
             if (status) {
-                appwriteService.deleteFile(post.featuredImage);
+                appwriteService.deleteFile(post.featuredimage);
                 navigate("/");
             }
         });
@@ -37,7 +37,7 @@ export default function Post() {
             <Container>
                 <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
                     <img
-                        src={appwriteService.getFilePreview(post.featuredImage)}
+                        src={appwriteService.getFilePreview(post.featuredimage)}
                         alt={post.title}
                         className="rounded-xl"
                     />

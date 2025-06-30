@@ -7,8 +7,10 @@ function Home() {
 
     useEffect(()=>{    
         //setting the posts in the setPosts of useState(). 
-        appwriteService.getPosts().then((posts)=>{
+        appwriteService.getPosts([])
+        .then((posts)=>{
         if(posts){
+            console.log(posts.documents);
             setPosts(posts.documents)
         }
     })
@@ -28,25 +30,25 @@ function Home() {
                 </Container>
             </div>
         )
-    }
+    } else{
         return (
             <div className='w-full py-8'>
                 <Container>
                     <div className='flex flex-wrap'>
                         {
-                            posts.map((post)=> {
+                            posts.map((post)=> (
                                   
                                         <div key={post.$id} className='p-2 w-1/4'>
                                         <PostCard {...post} />{/*post={post} can also this way but there is another way to display post which is written postcard with this way all post will be displayed separately.*/}
                                     </div>
                                     
-                                }
+                            )
                             )
                         }
                     </div>
                 </Container>
             </div>
-        )
+        )}
 }
 
 

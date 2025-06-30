@@ -14,56 +14,72 @@ export class Service {
     this.databases = new Databases(this.client);
     this.bucket = new Storage(this.client);
   }
-  // if i want to add post then how it is possible.
-  async createPost({ title, slug, content, featuredImage, status, userId }) {
+
+  async createPost({
+    title,
+    slug,
+    content,
+    featuredimage,
+    status = "active",
+    userid,
+  }) {
     try {
-      console.log("Payload about to be sent to Appwrite:");
-      console.log({
-        databaseId: conf.appwriteDatabaseId,
-        collectionId: conf.appwriteCollectionId,
-        documentId: slug,
-          data: {
-          title,
-          content,
-          featuredImage,
-          status,
-          userId,
-        },
-      });
-      return await this.databases.createDocument(
+      // Validate required fields
+      if (!title || !content || !featuredimage || !userid) {
+        throw new Error(
+          "Missing required fields: title, content, featuredimage, or userid."
+        );
+      }
+
+      // Build the data object
+      const postData = {
+        title,
+        content,
+        featuredimage,
+        status,
+        userid,
+      };
+
+      // Log payload for debugging
+      console.log("Creating post with payload:", postData);
+
+      // Create document
+      const response = await this.databases.createDocument(
         conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
-        slug || ID.unique(), // Use slug if provided
-        {
-          title,
-          content,
-          featuredImage,
-          status,
-          userId,
-        }
+        slug || ID.unique(),
+        postData
       );
+
+      console.log("Post created successfully:", response);
+      return response;
     } catch (error) {
-      console.log("Appwrite service :: createPost error", error);
-      throw error; // rethrow for better handling
+      console.error("❌ Appwrite createPost error:", error.message);
+      throw error;
     }
   }
-
   //update document->
-  async updatePost(slug, { title, content, featuredImage, status }) {
+  async updatePost(slug, { title, content, featuredimage, status }) {
     try {
+      const data = {
+        title,
+        content,
+        status,
+      };
+
+      if (featuredimage) {
+        data.featuredimage = featuredimage;
+      }
+
       return await this.databases.updateDocument(
         conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
         slug,
-        {
-          title,
-          content,
-          featuredImage,
-          status,
-        }
+        data
       );
     } catch (error) {
-      console.log("Error in update post of config.js :: ", error);
+      console.error("Error in updatePost:", error.message);
+      throw error;
     }
   }
 
