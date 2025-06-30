@@ -17,10 +17,23 @@ export class Service {
   // if i want to add post then how it is possible.
   async createPost({ title, slug, content, featuredImage, status, userId }) {
     try {
+      console.log("Payload about to be sent to Appwrite:");
+      console.log({
+        databaseId: conf.appwriteDatabaseId,
+        collectionId: conf.appwriteCollectionId,
+        documentId: slug,
+          data: {
+          title,
+          content,
+          featuredImage,
+          status,
+          userId,
+        },
+      });
       return await this.databases.createDocument(
         conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
-        slug, // i am using slug as document id
+        slug || ID.unique(), // Use slug if provided
         {
           title,
           content,
@@ -29,9 +42,9 @@ export class Service {
           userId,
         }
       );
-      // which value will be passed in it.
     } catch (error) {
-      console.log("appwrite servie :: create Post", error);
+      console.log("Appwrite service :: createPost error", error);
+      throw error; // rethrow for better handling
     }
   }
 

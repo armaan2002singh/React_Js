@@ -16,42 +16,43 @@ export default function RTE({
     <Controller
     name={name || "content"}
     control={control} // to provide the control to the parent to provide the access of the all attributes and values.
-    render={({field:{onChange}})=>(
+    render={({field:{onChange, value}})=>(
 
         //the element we want to change.
         <Editor
-                initialValue={defaultValue}
-                init={{
-                    initialValue: defaultValue,
-                    height: 500,
-                    menubar: true,
-                    plugins: [
-                        "image",
-                        "advlist",
-                        "autolink",
-                        "lists",
-                        "link",
-                        "image",
-                        "charmap",
-                        "preview",
-                        "anchor",
-                        "searchreplace",
-                        "visualblocks",
-                        "code",
-                        "fullscreen",
-                        "insertdatetime",
-                        "media",
-                        "table",
-                        "code",
-                        "help",
-                        "wordcount",
-                        "anchor",
-                    ],
-                    toolbar:
-                    "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |removeformat | help",
-                    content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }"
-                }}
-                onEditorChange={onChange}
+        apiKey='br3cfivulrbdlevgio6tyc061hgrwjw2strm7yefiitmcxwu'
+        initialValue={defaultValue}
+        init={{
+            initialValue: defaultValue,
+            height: 500,
+            menubar: true,
+            plugins: [
+                "image",
+                "advlist",
+                "autolink",
+                "lists",
+                "link",
+                "image",
+                "charmap",
+                "preview",
+                "anchor",
+                "searchreplace",
+                "visualblocks",
+                "code",
+                "fullscreen",
+                "insertdatetime",
+                "media",
+                "table",
+                "code",
+                "help",
+                "wordcount",
+                "anchor",
+            ],
+            toolbar:
+            "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |removeformat | help",
+            content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }"
+        }}
+        onEditorChange={onChange}
         />
         // init - what value we want can fill in this init={{here}}
         

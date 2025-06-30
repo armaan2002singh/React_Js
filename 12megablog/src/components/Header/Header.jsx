@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import React from 'react'
 
 export default function Header() {
-  const authStatus = useSelector((state) => state.auth.Status)
+  const authStatus = useSelector((state) => state.auth.status)
   //useNavigate
   const navigate = useNavigate()
 
